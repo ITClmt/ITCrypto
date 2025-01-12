@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import DashBoard from "./components/DashBoard";
 import NavBar from "./components/NavBar";
 import axios from "axios";
+import { Outlet } from "react-router";
 
 const apiUrl = "https://api.coingecko.com/api/v3/coins/markets";
 const params = {
@@ -12,17 +12,8 @@ const params = {
   sparkline: false,
 };
 
-interface Coin {
-  id: string;
-  name: string;
-  current_price: number;
-  market_cap: number;
-  price_change_percentage_24h: number;
-  image: string;
-}
-
 function App() {
-  const [coins, setCoins] = useState([] as Coin[]);
+  const [coins, setCoins] = useState([] as []);
 
   useEffect(() => {
     axios
@@ -35,7 +26,7 @@ function App() {
   return (
     <>
       <NavBar />
-      <DashBoard coins={coins} />
+      <Outlet context={{ coins }} />
     </>
   );
 }
