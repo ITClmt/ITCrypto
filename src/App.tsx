@@ -3,17 +3,28 @@ import NavBar from "./components/NavBar";
 import axios from "axios";
 import { Outlet } from "react-router";
 
+interface CoinTypes {
+  coins: {
+    id: string;
+    name: string;
+    current_price: number;
+    market_cap: number;
+    price_change_percentage_24h: number;
+    image: string;
+  }[];
+}
+
 const apiUrl = "https://api.coingecko.com/api/v3/coins/markets";
 const params = {
   vs_currency: "usd",
   order: "market_cap_desc",
-  per_page: 10,
+  per_page: 100,
   page: 1,
   sparkline: false,
 };
 
 function App() {
-  const [coins, setCoins] = useState([] as []);
+  const [coins, setCoins] = useState([] as CoinTypes[]);
 
   useEffect(() => {
     axios
@@ -26,7 +37,9 @@ function App() {
   return (
     <>
       <NavBar />
-      <Outlet context={{ coins }} />
+      <main>
+        <Outlet context={{ coins }} />
+      </main>
     </>
   );
 }

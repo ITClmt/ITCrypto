@@ -1,9 +1,9 @@
-import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./styles/index.css";
 import HomePage from "./pages/HomePage.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router";
+import CoinPage from "./pages/CoinPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -12,6 +12,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <HomePage />,
+      },
+      {
+        path: "/coins/:id",
+        element: <CoinPage />,
       },
     ],
   },
@@ -23,8 +27,4 @@ if (!root) {
   throw new Error("Erreur");
 }
 
-createRoot(root).render(
-  <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>,
-);
+createRoot(root).render(<RouterProvider router={router} />);

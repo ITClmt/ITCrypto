@@ -25,22 +25,26 @@ export default function Cards({ coin }: coinTypes) {
   const [historicalData, setHistoricalData] = useState<
     { date: string; price: number }[]
   >([]);
+  const apiUrl = `https://api.coingecko.com/api/v3/coins/${coin.id}/market_chart`;
+  const params = {
+    vs_currency: "usd",
+    days: 59,
+    interval: "daily",
+    precision: 3,
+  };
 
   useEffect(() => {
-    axios
-      .get(
-        `https://api.coingecko.com/api/v3/coins/${coin.id}/market_chart?vs_currency=usd&days=59&interval=daily&precision=3`,
-      )
-      .then((res) => {
-        const filteredData = res.data.prices
-          .filter((_: number, index: number) => index % 7 === 0)
-          .map((price: [number, number]) => ({
-            date: new Date(price[0]).toLocaleDateString(),
-            price: price[1],
-          }));
-        setHistoricalData(filteredData);
-      });
-  }, [coin.id]);
+    axios.get(apiUrl, { params }).then((res) => {
+      const filteredData = res.data.prices
+        .filter((_: number, index: number) => index % 7 === 0)
+        .map((price: [number, number]) => ({
+          date: new Date(price[0]).toLocaleDateString(),
+          price: price[1],
+        }));
+      setHistoricalData(filteredData);
+      console.info(filteredData);
+    });
+  }, [apiUrl]);
 
   return (
     <section className="bg-neutral-800 p-4 rounded-lg">
@@ -52,7 +56,9 @@ export default function Cards({ coin }: coinTypes) {
         Current Price:{" "}
         <span className="text-3xl text-yellow-300">${coin.current_price}</span>
       </p>
-      <p className="text-white text-xl">Market Cap: ${coin.market_cap}</p>
+      <p className="text-white text-xl">
+        Market Cap: ${coin.market_cap.toLocaleString()}
+      </p>
       <p className="text-white text-xl">
         24h Change: {coin.price_change_percentage_24h}%
       </p>
