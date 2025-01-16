@@ -15,32 +15,46 @@ interface CoinItemProps {
 
 export default function CoinItem({ coin }: CoinItemProps) {
   return (
-    <article className="bg-neutral-800 text-white p-3 rounded-lg mb-3 shadow-md transform transition-transform hover:scale-105">
-      <Link to={`/coins/${coin.id}`}>
-        <div className="flex justify-between items-center mb-2">
-          <h2 className="text-xl font-semibold">{coin.name}</h2>
-          <img src={coin.image} alt={coin.name} className="h-10" />
+    <Link to={`/coins/${coin.id}`}>
+      <article className="flex flex-col md:flex-row justify-between items-center bg-neutral-800 text-white p-3 rounded-lg mb-3 transform transition-transform hover:scale-105">
+        <div className="flex flex-col md:flex-row items-center mb-2 md:mb-0 w-1/4">
+          <h2 className="text-xl font-semibold pr-4 mb-2 md:mb-0">
+            {coin.name}
+          </h2>
+          <img
+            src={coin.image}
+            alt={coin.name}
+            className="h-10 md:h-8 md:mr-4"
+          />
         </div>
-        <p className="text-sm">
-          Current Price:{" "}
-          <span className="text-lg text-yellow-300">${coin.current_price}</span>
-        </p>
-        <p className="text-sm">
-          Market Cap: ${coin.market_cap.toLocaleString()}
-        </p>
-        <p className="text-sm">
-          24h Change:{" "}
-          <span
-            className={
-              coin.price_change_percentage_24h < 0
-                ? "text-red-500"
-                : "text-green-500"
-            }
-          >
-            {coin.price_change_percentage_24h}%
-          </span>
-        </p>
-      </Link>
-    </article>
+        <div className="w-1/4">
+          <p className="text-xl text-center md:text-left md:text-lg mb-2 md:mb-0">
+            Current Price:{" "}
+            <span className="text-xl text-yellow-300">
+              ${coin.current_price}
+            </span>
+          </p>
+        </div>
+        <div className="w-1/4 flex justify-center">
+          <p className="text-lg md:text-sd text-center md:text-left mb-2 md:mb-0 lg:ml-16">
+            Market Cap: ${coin.market_cap.toLocaleString()}
+          </p>
+        </div>
+        <div className="w-1/4 flex justify-end">
+          <p className="text-sm text-center md:text-left">
+            24h Change:{" "}
+            <span
+              className={
+                coin.price_change_percentage_24h < 0
+                  ? "text-red-500"
+                  : "text-green-500"
+              }
+            >
+              {coin.price_change_percentage_24h}%
+            </span>
+          </p>
+        </div>
+      </article>
+    </Link>
   );
 }

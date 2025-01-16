@@ -4,6 +4,13 @@ import "./styles/index.css";
 import HomePage from "./pages/HomePage.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import CoinPage from "./pages/CoinPage.tsx";
+import axios from "axios";
+
+const coinLoader = async ({ params }: { params: { id: string } }) => {
+  const apiUrl = `https://api.coingecko.com/api/v3/coins/${params.id}`;
+  const response = await axios.get(apiUrl);
+  return response.data;
+};
 
 const router = createBrowserRouter([
   {
@@ -16,6 +23,8 @@ const router = createBrowserRouter([
       {
         path: "/coins/:id",
         element: <CoinPage />,
+        loader: ({ params }) =>
+          coinLoader({ params: params as { id: string } }),
       },
     ],
   },

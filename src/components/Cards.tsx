@@ -59,7 +59,13 @@ export default function Cards({ coin }: coinTypes) {
       <p className="text-white text-xl">
         Market Cap: ${coin.market_cap.toLocaleString()}
       </p>
-      <p className="text-white text-xl">
+      <p
+        className={
+          coin.price_change_percentage_24h < 0
+            ? "text-red-500"
+            : "text-green-500"
+        }
+      >
         24h Change: {coin.price_change_percentage_24h}%
       </p>
       <div className="mt-4">
