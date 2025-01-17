@@ -30,7 +30,7 @@ export default function CoinItem({ coin }: CoinItemProps) {
         <div className="w-1/4">
           <p className="text-xl text-center md:text-left md:text-lg mb-2 md:mb-0">
             Current Price:{" "}
-            <span className="text-xl text-yellow-300">
+            <span className="text-xl text-customYellow">
               ${coin.current_price}
             </span>
           </p>

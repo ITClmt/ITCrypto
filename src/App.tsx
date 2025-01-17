@@ -14,7 +14,8 @@ interface CoinTypes {
   }[];
 }
 
-const apiUrl = "https://api.coingecko.com/api/v3/coins/markets";
+const apiUrl =
+  "https://api.coingecko.com/api/v3/coins/markets?x_cg_demo_api_key=CG-nFXv6294Yg9rtNDczxF13idZ";
 const params = {
   vs_currency: "usd",
   order: "market_cap_desc",
