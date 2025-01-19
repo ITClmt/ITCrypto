@@ -76,7 +76,7 @@ const setStoredCache = (coinId: string, data: HistoricalDataPoint[]): void => {
 
 // API Functions
 const createApiUrl = (coinId: string): string =>
-  `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart`;
+  `http://localhost:5000/api/v3/coins/${coinId}/market_chart`;
 
 const getApiParams = () => ({
   vs_currency: "usd",

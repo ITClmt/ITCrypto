@@ -14,22 +14,14 @@ interface CoinTypes {
   }[];
 }
 
-const apiUrl =
-  "https://api.coingecko.com/api/v3/coins/markets?x_cg_demo_api_key=CG-nFXv6294Yg9rtNDczxF13idZ";
-const params = {
-  vs_currency: "usd",
-  order: "market_cap_desc",
-  per_page: 100,
-  page: 1,
-  sparkline: false,
-};
+const apiUrl = "http://localhost:5000/api/v3/coins/markets";
 
 function App() {
   const [coins, setCoins] = useState([] as CoinTypes[]);
 
   useEffect(() => {
     axios
-      .get(apiUrl, { params })
+      .get(apiUrl)
       .then((res) => setCoins(res.data))
       .catch((err) => console.error(err));
   }, []);
