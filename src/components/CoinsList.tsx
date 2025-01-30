@@ -11,7 +11,7 @@ export default function CoinsList({ coins }: CoinTypes) {
 
   return (
     <section className="flex flex-col bg-neutral-900 text-white font-mono p-5 container mx-auto my-2 rounded-lg">
-      <h2 className="text-4xl p-6">Top 100:</h2>
+      <h2 className="text-4xl p-6">Top 200:</h2>
       {currentCoins.map((coin) => (
         <CoinItem key={coin.id} coin={coin} />
       ))}
