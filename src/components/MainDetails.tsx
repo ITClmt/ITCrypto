@@ -10,10 +10,12 @@ export default function MainDetails({ coinData }: { coinData: CoinData }) {
               alt={coinData.name}
               className="h-16 w-16"
             />
-            <h1 className="text-4xl font-bold text-white">{coinData.name}</h1>
+            <h1 className="text-2xl sm:text-4xl font-bold text-white">
+              {coinData.name}
+            </h1>
           </div>
           <div className="text-right">
-            <p className="text-3xl font-bold text-white">
+            <p className="text-2xl sm:text-3xl font-bold text-white">
               ${coinData.market_data.current_price.usd.toLocaleString()}
             </p>
             <p

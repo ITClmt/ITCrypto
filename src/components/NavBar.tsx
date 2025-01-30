@@ -3,16 +3,16 @@ import { Link, useNavigate } from "react-router";
 
 export default function NavBar({ coins }: { coins: Coin[] }) {
   const [search, setSearch] = useState("");
-  const [suggestions, setSuggestions] = useState<Coin[]>([]);
+  const [suggestions, setSuggestions] = useState([] as Coin[]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const navigate = useNavigate();
 
   const handleSearch = (value: string) => {
     setSearch(value);
-    if (value.length > 1) {
-      const filteredSuggestions = coins.filter((coin) =>
-        coin.name.toLowerCase().includes(value.toLowerCase()),
-      );
+    if (value.length > 2) {
+      const filteredSuggestions = coins
+        .filter((coin) => coin.name.toLowerCase().includes(value.toLowerCase()))
+        .slice(0, 8);
       setSuggestions(filteredSuggestions);
       setShowSuggestions(true);
     } else {
