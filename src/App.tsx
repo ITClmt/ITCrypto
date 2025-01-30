@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import NavBar from "./components/NavBar";
 import axios from "axios";
 import { Outlet } from "react-router";
+import { Analytics } from "@vercel/analytics/react";
 
 const CACHE_KEY = "coingecko_data";
 const CACHE_DURATION = 15 * 60 * 1000; // 15 minutes in milliseconds
@@ -64,6 +65,7 @@ function App() {
       <main>
         <Outlet context={{ coins }} />
       </main>
+      <Analytics />
     </>
   );
 }
