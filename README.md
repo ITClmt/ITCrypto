@@ -30,26 +30,6 @@ Welcome to **ITCrypto Dashboard**, your go-to web application for tracking the l
 - **API**: CoinGecko
 - **Code Quality**: Biome (Linting & Formatting)
 
-## 📦 Installation
-
-To get started with ITCrypto Dashboard, follow these simple steps:
-
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/yourusername/itcrypto-dashboard.git
-   cd itcrypto-dashboard
-   ```
-
-2. **Install dependencies**:
-   ```bash
-   npm install
-   ```
-
-3. **Start the development server**:
-   ```bash
-   npm run dev
-   ```
-
 ## 🔧 Configuration
 
 The application is configured with several key files:
