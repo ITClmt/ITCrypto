@@ -1,18 +1,5 @@
 import { Link } from "react-router";
 
-interface Coin {
-  id: string;
-  name: string;
-  current_price: number;
-  market_cap: number;
-  price_change_percentage_24h: number;
-  image: string;
-}
-
-interface CoinItemProps {
-  coin: Coin;
-}
-
 export default function CoinItem({ coin }: CoinItemProps) {
   return (
     <Link to={`/coins/${coin.id}`}>

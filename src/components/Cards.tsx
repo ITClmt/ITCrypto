@@ -1,5 +1,3 @@
-import axios from "axios";
-import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 import {
   ResponsiveContainer,
@@ -10,143 +8,11 @@ import {
   Area,
   AreaChart,
 } from "recharts";
-
-// Types and Interfaces
-type Coin = {
-  id: string;
-  name: string;
-  current_price: number;
-  market_cap: number;
-  price_change_percentage_24h: number;
-  image: string;
-};
-
-type Props = {
-  coin: Coin;
-};
-
-type HistoricalDataPoint = {
-  date: string;
-  price: number;
-};
-
-type CacheData = {
-  data: HistoricalDataPoint[];
-  timestamp: number;
-};
-
-// Constants
-const CACHE_DURATION = 900000; // 15 minute in milliseconds
-const POLL_INTERVAL = 900000; // 15 minute in milliseconds
-
-// Cache Management Functions
-const createCacheKey = (coinId: string): string => `crypto-cache-${coinId}`;
-
-const getStoredCache = (coinId: string): CacheData | null => {
-  try {
-    const stored = localStorage.getItem(createCacheKey(coinId));
-    if (!stored) return null;
-
-    const cache = JSON.parse(stored) as CacheData;
-    const now = Date.now();
-
-    if (now - cache.timestamp > CACHE_DURATION) {
-      localStorage.removeItem(createCacheKey(coinId));
-      return null;
-    }
-
-    return cache;
-  } catch (error) {
-    console.error("Error reading from localStorage:", error);
-    return null;
-  }
-};
-
-const setStoredCache = (coinId: string, data: HistoricalDataPoint[]): void => {
-  try {
-    const cacheData: CacheData = {
-      data,
-      timestamp: Date.now(),
-    };
-    localStorage.setItem(createCacheKey(coinId), JSON.stringify(cacheData));
-  } catch (error) {
-    console.error("Error writing to localStorage:", error);
-  }
-};
-
-// API Functions
-const createApiUrl = (coinId: string): string =>
-  `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart`;
-
-const getApiParams = () => ({
-  vs_currency: "usd",
-  days: 59,
-  interval: "daily",
-  precision: 3,
-});
-
-const processApiData = (rawData: [number, number][]): HistoricalDataPoint[] =>
-  rawData
-    .filter((_, index: number) => index % 7 === 0)
-    .map((price: [number, number]) => ({
-      date: new Date(price[0]).toLocaleDateString(),
-      price: price[1],
-    }));
+import { useHistoricalData } from "../hooks/useHistoricalData";
 
 // Component
 const Cards = ({ coin }: Props) => {
-  const [historicalData, setHistoricalData] = useState(
-    [] as HistoricalDataPoint[],
-  );
-  const [loading, setLoading] = useState(true as boolean);
-  const [error, setError] = useState(null as string | null);
-  const pollIntervalRef = useRef(null as NodeJS.Timeout | null);
-
-  const fetchData = async (force = false): Promise<void> => {
-    if (!force) {
-      const cachedData = getStoredCache(coin.id);
-      if (cachedData) {
-        setHistoricalData(cachedData.data);
-        setLoading(false);
-        return;
-      }
-    }
-
-    try {
-      setLoading(true);
-      setError(null);
-
-      const response = await axios.get(createApiUrl(coin.id), {
-        params: getApiParams(),
-      });
-
-      const processedData = processApiData(response.data.prices);
-      setStoredCache(coin.id, processedData);
-      setHistoricalData(processedData);
-    } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "An error occurred";
-      setError(errorMessage);
-      console.error("Error fetching data:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    fetchData(false);
-
-    pollIntervalRef.current = setInterval(() => {
-      fetchData(true);
-    }, POLL_INTERVAL);
-
-    return () => {
-      if (pollIntervalRef.current) {
-        clearInterval(pollIntervalRef.current);
-      }
-    };
-  }, [coin.id]);
+  const { historicalData, loading, error } = useHistoricalData(coin.id);
 
   return (
     <section className="bg-neutral-800 p-4 rounded-lg">
