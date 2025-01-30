@@ -2,6 +2,8 @@
 
 Welcome to **ITCrypto Dashboard**, your go-to web application for tracking the latest trends in the cryptocurrency market! Built with React and TypeScript, this sleek and responsive dashboard provides real-time data and insights into the world of cryptocurrencies using the powerful CoinGecko API.
 
+[Link for ITCrypto](https://itcrypto.vercel.app/)
+
 ## 🚀 Features
 
 - **Real-time Market Data**: Stay updated with live prices, market caps, and 24-hour changes for top cryptocurrencies.
