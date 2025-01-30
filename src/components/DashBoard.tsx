@@ -1,16 +1,5 @@
 import Cards from "./Cards";
 
-interface CoinTypes {
-  coins: {
-    id: string;
-    name: string;
-    current_price: number;
-    market_cap: number;
-    price_change_percentage_24h: number;
-    image: string;
-  }[];
-}
-
 export default function DashBoard({ coins }: CoinTypes) {
   return (
     <section className="bg-neutral-900 text-white font-mono p-5 container mx-auto my-2 rounded-lg">

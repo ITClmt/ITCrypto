@@ -1,17 +1,6 @@
 import CoinItem from "./CoinItem";
 import { useState } from "react";
 
-interface CoinTypes {
-  coins: {
-    id: string;
-    name: string;
-    current_price: number;
-    market_cap: number;
-    price_change_percentage_24h: number;
-    image: string;
-  }[];
-}
-
 export default function CoinsList({ coins }: CoinTypes) {
   const [currentPage, setCurrentPage] = useState(1);
   const coinsPerPage = 10;
@@ -31,6 +20,7 @@ export default function CoinsList({ coins }: CoinTypes) {
           (_, index) => (
             <button
               type="button"
+              // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
               key={index}
               onClick={() => setCurrentPage(index + 1)}
               className={`px-3 py-1 rounded ${
