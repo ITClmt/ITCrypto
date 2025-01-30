@@ -14,7 +14,7 @@ const params = {
 const apiUrl = "https://api.coingecko.com/api/v3/coins/markets";
 
 function App() {
-  const [coins, setCoins] = useState([] as CoinTypes[]);
+  const [coins, setCoins] = useState([] as Coin[]);
 
   useEffect(() => {
     axios
@@ -26,7 +26,7 @@ function App() {
 
   return (
     <>
-      <NavBar />
+      <NavBar coins={coins} />
       <main>
         <Outlet context={{ coins }} />
       </main>

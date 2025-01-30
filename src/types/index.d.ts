@@ -28,14 +28,7 @@ interface CoinData {
 }
 
 interface CoinTypes {
-  coins: {
-    id: string;
-    name: string;
-    current_price: number;
-    market_cap: number;
-    price_change_percentage_24h: number;
-    image: string;
-  }[];
+  coins: Coin[];
 }
 
 interface Coin {
