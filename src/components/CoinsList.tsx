@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export default function CoinsList({ coins }: CoinTypes) {
   const [currentPage, setCurrentPage] = useState(1);
-  const coinsPerPage = 10;
+  const coinsPerPage = 20;
 
   const indexOfLastCoin = currentPage * coinsPerPage;
   const indexOfFirstCoin = indexOfLastCoin - coinsPerPage;
@@ -15,7 +15,7 @@ export default function CoinsList({ coins }: CoinTypes) {
       {currentCoins.map((coin) => (
         <CoinItem key={coin.id} coin={coin} />
       ))}
-      <div className="flex justify-center gap-2 mt-4">
+      <div className="flex flex-wrap justify-center gap-2 mt-4">
         {Array.from({ length: Math.ceil(coins.length / coinsPerPage) }).map(
           (_, index) => (
             <button
@@ -23,7 +23,7 @@ export default function CoinsList({ coins }: CoinTypes) {
               // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
               key={index}
               onClick={() => setCurrentPage(index + 1)}
-              className={`px-3 py-1 rounded ${
+              className={`px-3 py-1 rounded  ${
                 currentPage === index + 1 ? "bg-blue-500" : "bg-neutral-800"
               }`}
             >
