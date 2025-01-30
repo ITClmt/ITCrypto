@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import CoinPage from "./pages/CoinPage.tsx";
 import axios from "axios";
+import ErrorPage from "./pages/ErrorPage.tsx";
 
 const coinLoader = async ({ params }: { params: { id: string } }) => {
   const apiUrl = `https://api.coingecko.com/api/v3/coins/${params.id}`;
@@ -25,6 +26,16 @@ const router = createBrowserRouter([
         element: <CoinPage />,
         loader: ({ params }) =>
           coinLoader({ params: params as { id: string } }),
+        errorElement: (
+          <section className="bg-neutral-900 p-4 rounded-lg text-white">
+            <h1>Retry in few minutes...</h1>
+            <p>
+              Sorry for the inconvenience, but due to the limitations of the
+              free plan API, you cannot request too much data at once. Please
+              try again later.
+            </p>
+          </section>
+        ),
       },
     ],
   },
